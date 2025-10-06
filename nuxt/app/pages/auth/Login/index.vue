@@ -7,7 +7,7 @@
       </h2>
 
       <!-- Form -->
-      <form>
+      <form @submit.prevent="submitForm">
         <!-- Email -->
         <div class="pt-2">
           <label for="email" class="block text-sm font-medium text-gray-700">
@@ -16,7 +16,6 @@
           <input
             type="email"
             id="email"
-            required
             class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm 
                    focus:outline-none focus:ring-2 focus:ring-blue-500 
                    focus:border-blue-500 border-gray-300"
@@ -31,7 +30,6 @@
           <input
             type="password"
             id="password"
-            required
             class="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm 
                    focus:outline-none focus:ring-2 focus:ring-blue-500 
                    focus:border-blue-500 border-gray-300"
@@ -41,7 +39,7 @@
         <!-- Remember me + Forgot password -->
         <div class="flex items-center justify-between text-sm pt-5 pb-5">
           <label class="flex items-center space-x-2">
-            <input type="checkbox" v-model="remember" class="rounded border-gray-300">
+            <input type="checkbox" class="rounded border-gray-300">
             <span>Remember me</span>
           </label>
           <NuxtLink to="/forgot-password" class="text-blue-600 hover:underline">
@@ -73,6 +71,17 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+
+  const { login } = useSanctum();
+
+  const form = ref({
+    email: '',
+    password: ''
+  });
+
+  const submitForm = () => {
+    login(form.value)
+  };
 
 </script>

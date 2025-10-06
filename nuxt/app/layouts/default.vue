@@ -24,7 +24,7 @@
         <div class="flex items-center space-x-4">
           <span class="hidden sm:inline">Welcome, Henrique</span>
           <NuxtLink 
-            to="/logout" 
+            to="/" 
             class="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
           >
             Logout

@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@qirolab/nuxt-sanctum-authentication": "^0.1.15",
     "@tailwindcss/vite": "^4.1.14",
     "nuxt": "^4.1.2",
     "tailwindcss": "^4.1.14",
