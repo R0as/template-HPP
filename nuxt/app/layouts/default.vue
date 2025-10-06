@@ -5,30 +5,28 @@
       <div class="flex justify-between h-16 items-center">
         
         <!-- Left: Logo + Navigation -->
-        <div class="flex items-center space-x-4">
+        <div class="w-full flex items-center justify-between">
           <!-- Logo -->
-          <NuxtLink to="/" class="text-xl font-bold hover:text-gray-300">
+          <div class="flex">
+            <NuxtLink to="/" class="text-xl font-bold hover:text-gray-300">
             Template HPP
           </NuxtLink>
+          </div>
 
           <!-- Navigation Links -->
-          <div class="hidden md:flex space-x-4">
-            <NuxtLink to="/" class="hover:text-gray-300">Home</NuxtLink>
-            <NuxtLink to="/auth/login" class="hover:text-gray-300">Login</NuxtLink>
-            <NuxtLink to="/auth/register" class="hover:text-gray-300">Register</NuxtLink>
-            <NuxtLink to="/dashboard" class="hover:text-gray-300">Dashboard</NuxtLink>
+          <div class="flex space-x-4">
+            <template v-if="!isLoggedIn">
+              <NuxtLink to="/auth/login" class="hover:text-gray-300">Login</NuxtLink>
+              <NuxtLink to="/auth/register" class="hover:text-gray-300">Register</NuxtLink>
+            </template>
+            <template v-if="isLoggedIn">
+              <NuxtLink to="/dashboard" class="hover:text-gray-300">Dashboard</NuxtLink>
+              <NuxtLink @click.prevent="logoutUser" to="/" class="bg-red-600 px-3 py-1 rounded hover:bg-red-700">
+                Logout
+              </NuxtLink>
+              <span v-if="user" class="text-yellow-500">Welcome, {{user.name}}</span>
+            </template>
           </div>
-        </div>
-
-        <!-- Right: Username + Logout -->
-        <div class="flex items-center space-x-4">
-          <span class="hidden sm:inline">Welcome, Henrique</span>
-          <NuxtLink 
-            to="/" 
-            class="bg-red-600 px-3 py-1 rounded hover:bg-red-700"
-          >
-            Logout
-          </NuxtLink>
         </div>
       </div>
     </div>
@@ -37,3 +35,18 @@
         <slot/>
     </div>
 </template>
+
+<script setup lang="ts">
+
+  interface User{
+    name:string;
+    email:string;
+  }
+
+  const{ isLoggedIn , user, logout} =  useSanctum<User>()
+
+  function logoutUser(){
+    logout()
+  }
+
+</script>
