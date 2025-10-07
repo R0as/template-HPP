@@ -40,7 +40,7 @@ Antes de começar, garanta que os seguintes itens estejam instalados na sua máq
 ### 1. Acesse o diretório do backend
 
 ```bash
-cd backend
+cd laravel-API
 ```
 
 ### 2. Instale as dependências do Laravel
@@ -101,7 +101,7 @@ http://127.0.0.1:8000
 ### 1. Acesse o diretório do frontend
 
 ```bash
-cd frontend
+cd nuxt
 ```
 
 ### 2. Instale as dependências
@@ -166,3 +166,4 @@ Acesse:
 ## 📝 Licença
 
 Este projeto está sob a licença MIT. Consulte o arquivo `LICENSE` para mais informações.
+
