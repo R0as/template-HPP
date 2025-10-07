@@ -24,7 +24,7 @@
         </div>
 
         <!-- Password -->
-        <div class="pt-2">
+        <div class="pt-2 pb-10">
           <label for="password" class="block text-sm font-medium text-gray-700">
             Password
           </label>
@@ -39,7 +39,7 @@
         </div>
 
         <!-- Remember me + Forgot password -->
-        <div class="flex items-center justify-between text-sm pt-5 pb-5">
+        <!-- <div class="flex items-center justify-between text-sm pt-5 pb-5">
           <label class="flex items-center space-x-2">
             <input type="checkbox" class="rounded border-gray-300">
             <span>Remember me</span>
@@ -47,7 +47,7 @@
           <NuxtLink to="/forgot-password" class="text-blue-600 hover:underline">
             Forgot password?
           </NuxtLink>
-        </div>
+        </div> -->
 
         <!-- Submit button -->
         <button
@@ -86,4 +86,7 @@
     login(form.value)
   };
 
+  definePageMeta({
+  middleware: ['$guest'],
+});
 </script>
