@@ -3,7 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  css: ['~/assets/css/main.css'],
+  css: ['~/assets/css/main.css',],
 
   vite: {
     plugins: [
@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     ],
   },
 
-  modules: ["@qirolab/nuxt-sanctum-authentication"],
+  modules: ["@qirolab/nuxt-sanctum-authentication", '@primevue/nuxt-module'],
 
   laravelSanctum: {
     /**
@@ -107,7 +107,7 @@ export default defineNuxtConfig({
        * Options: 'cookie' or 'localStorage'
        * @default 'cookie'
        */
-      provider: 'localStorage',
+      provider: 'cookie',
     },
 
   },

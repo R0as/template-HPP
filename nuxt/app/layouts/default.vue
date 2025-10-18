@@ -17,7 +17,6 @@
           <div class="flex space-x-4">
             <template v-if="!isLoggedIn">
               <NuxtLink to="/auth/login" class="hover:text-gray-300">Login</NuxtLink>
-              <NuxtLink to="/auth/register" class="hover:text-gray-300">Register</NuxtLink>
             </template>
             <template v-if="isLoggedIn">
               <NuxtLink to="/dashboard" class="hover:text-gray-300">Dashboard</NuxtLink>

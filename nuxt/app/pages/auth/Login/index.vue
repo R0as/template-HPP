@@ -58,17 +58,6 @@
           Login
         </button>
       </form>
-
-      <!-- Divider -->
-      <div class="my-6 border-t border-gray-200"></div>
-
-      <!-- Register link -->
-        <p class="text-sm text-center text-gray-600">
-            Don’t have an account?
-            <NuxtLink to="/auth/register" class="text-blue-600 hover:underline">
-                Register
-            </NuxtLink>
-      </p>
     </div>
   </div>
 </template>
