@@ -13,6 +13,13 @@ export default defineNuxtConfig({
 
   modules: ["@qirolab/nuxt-sanctum-authentication", '@primevue/nuxt-module'],
 
+  primevue: {
+    options: {
+      theme: {
+      }
+    }
+  },
+
   laravelSanctum: {
     /**
          * The base URL of the Laravel API.
