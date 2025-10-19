@@ -1,10 +1,10 @@
 <template>
-  <div class="flex justify-between items-center mb-4">
-  <h1 class="text-xl font-bold">Painel de Usuários</h1>
-  
+  <div class="flex justify-between items-center mb-4" v-if="loggedInUser?.roles === 'admin'">
+    
+    <h1 class="text-xl font-bold">Painel de Usuários</h1>
+    
     <button 
-      v-if="loggedInUser?.roles === 'admin'"
-      @click="isModalVisible = true" 
+      @click="openCreateModal()" 
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
     >
       Novo Usuário
@@ -26,7 +26,7 @@
       <td class="p-2">{{ user.email }}</td>
       <td class="p-2">{{ user.roles }}</td>
       <td class="p-2 flex flex-row gap-4">
-        <button class="cursor-pointer hover:text-blue-800">Editar</button>
+        <button @click="openEditModal(user)" class="cursor-pointer hover:text-blue-800">Editar</button>
         <button @click="deleteUser( user.id )" class="cursor-pointer hover:text-red-800">Excluir</button>
       </td>
     </tr>
@@ -40,14 +40,14 @@
   >
     <h2 class="text-xl font-bold mb-4">Criar Novo Usuário</h2>
     
-    <form @submit.prevent="createUser" class="mt-4">
+    <form @submit.prevent="saveUser" class="mt-4">
       <div class="flex flex-col gap-4">
         
         <div class="flex flex-col gap-1">
           <label for="name" class="font-semibold">Nome</label>
           <input 
             id="name"
-            v-model="newUser.name" 
+            v-model="userForm.name" 
             type="text" 
             required
             class="p-2 border rounded-md focus:outline-blue-500"
@@ -58,7 +58,7 @@
           <label for="email" class="font-semibold">Email</label>
           <input 
             id="email"
-            v-model="newUser.email" 
+            v-model="userForm.email" 
             type="email" 
             required
             class="p-2 border rounded-md focus:outline-blue-500"
@@ -69,7 +69,7 @@
           <label for="password" class="font-semibold">Senha</label>
           <input 
             id="password"
-            v-model="newUser.password" 
+            v-model="userForm.password" 
             type="password" 
             required
             class="p-2 border rounded-md focus:outline-blue-500"
@@ -81,7 +81,7 @@
           <label for="roles" class="font-semibold">Cargo</label>
           <select
             id = "roles"
-            v-model="newUser.roles"
+            v-model="userForm.roles"
             class="p-2 border rounded-md focus:outline-blue-500"
             default-value="Cargo"
           >
@@ -126,40 +126,38 @@
   }
   const isModalVisible = ref(false);
 
-  const newUser = ref({
-    name: '',
-    email: '',
-    password: '',
-    roles: 'funcionario'
-  });
+  const userForm = ref({
+  id: '', // O ID começa vazio
+  name: '',
+  email: '',
+  password: '',
+  roles: 'funcionario'
+});
 
-  async function createUser() {
-  // 1. Validação simples para não enviar dados em branco
-  if (!newUser.value.name || !newUser.value.email || !newUser.value.password) {
-    alert('Por favor, preencha todos os campos.');
-    return;
-  }
-
+  async function saveUser() {
   try {
-    // 2. Enviamos a requisição POST para a API com os dados do formulário
-    await useSanctumFetch('/api/users', {
-      method: 'POST',
-      body: newUser.value // Acessamos .value por ser um 'ref'
-    });
+    // Se o formulário TEM um ID, nós estamos EDITANDO
+    if (userForm.value.id) {
+      await useSanctumFetch(`/api/users/${userForm.value.id}`, {
+        method: 'PUT', // Método para ATUALIZAR
+        body: userForm.value
+      });
+    } 
+    // Se NÃO TEM um ID, nós estamos CRIANDO
+    else {
+      await useSanctumFetch('/api/users', {
+        method: 'POST', // Método para CRIAR
+        body: userForm.value
+      });
+    }
 
-    // 3. Se a requisição foi um sucesso:
+    // Código que roda em ambos os casos (sucesso)
     isModalVisible.value = false; // Fecha o modal
-    
-    // Limpa o formulário para a próxima vez
-    newUser.value = { name: '', email: '', password: '', roles: '' }; 
-    
-    // 4. A MÁGICA: Atualiza a lista de usuários sem precisar recarregar a página!
-    await refresh(); 
-    
+    await refresh(); // Atualiza a lista na tela
+
   } catch (error) {
-    // 5. Se a API retornar um erro (ex: email já existe), ele será mostrado aqui
-    console.error("Erro ao criar usuário:", error);
-    alert('Ocorreu um erro ao criar o usuário. Verifique o console.');
+    console.error("Erro ao salvar usuário:", error);
+    alert('Ocorreu um erro ao salvar o usuário.');
   }
 }
 
@@ -178,6 +176,26 @@ async function deleteUser(userId: string){
     alert('Ocorreu um erro ao apagar o usuário. Verifique o console.');
   }
 }
+
+function openCreateModal() {
+  // Garante que o formulário esteja limpo
+  userForm.value = {
+    id: '',
+    name: '',
+    email: '',
+    password: '',
+    roles: 'funcionario'
+  };
+  isModalVisible.value = true;
+}
+
+// Função para o botão "Editar"
+function openEditModal(userToEdit: User) {
+  // Preenche o formulário com os dados do usuário da linha
+  userForm.value = { ...userToEdit, password: '' }; // O '...' copia todos os dados. Deixamos a senha em branco por segurança.
+  isModalVisible.value = true;
+}
+
 </script>
 
 <style lang="scss" scoped>
