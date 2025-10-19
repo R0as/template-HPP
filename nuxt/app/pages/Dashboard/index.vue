@@ -10,15 +10,29 @@
       Novo Usuário
     </button>
 </div>
-  
 
-  <div v-if="users" class="flex gap-12">
-    <ul v-for="user in users" :key="user.id">
-      <li>{{user.name }}</li>
-      <li>{{ user.email }}</li>
-      <li>{{ user.roles }}</li>
-    </ul>
-  </div>
+  <table v-if="users" class="w-full">
+  <thead>
+    <tr class="border-b">
+      <th class="p-2 text-left font-bold">Nome</th>
+      <th class="p-2 text-left font-bold">Email</th>
+      <th class="p-2 text-left font-bold">Função</th>
+      <th class="p-2 text-left font-bold">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="user in users" :key="user.id" class="border-b">
+      <td class="p-2">{{ user.name }}</td>
+      <td class="p-2">{{ user.email }}</td>
+      <td class="p-2">{{ user.roles }}</td>
+      <td class="p-2 flex flex-row gap-4">
+        <button class="cursor-pointer hover:text-blue-800">Editar</button>
+        <button @click="deleteUser( user.id )" class="cursor-pointer hover:text-red-800">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 
   <AppModal 
     :visible="isModalVisible" 
@@ -146,6 +160,22 @@
     // 5. Se a API retornar um erro (ex: email já existe), ele será mostrado aqui
     console.error("Erro ao criar usuário:", error);
     alert('Ocorreu um erro ao criar o usuário. Verifique o console.');
+  }
+}
+
+async function deleteUser(userId: string){
+  if (!confirm('Você tem certeza que deseja excluir este usuário?')) {
+    return;
+  }
+  try{
+    await useSanctumFetch(`/api/users/${userId}`,{
+      method: 'DELETE',
+    })
+    await refresh();
+    alert("Usuario excluido com sucesso!")
+  }catch(error){
+    console.log('Erro ao deletar usuário: ', error);
+    alert('Ocorreu um erro ao apagar o usuário. Verifique o console.');
   }
 }
 </script>
