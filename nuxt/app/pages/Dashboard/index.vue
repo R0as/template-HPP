@@ -1,11 +1,15 @@
 <template>
   <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-bold">Painel de Usuários</h1>
-      
-      <button @click="isModalVisible = true" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Novo Usuário
-      </button>
-    </div>
+  <h1 class="text-xl font-bold">Painel de Usuários</h1>
+  
+    <button 
+      v-if="loggedInUser?.roles === 'admin'"
+      @click="isModalVisible = true" 
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+    >
+      Novo Usuário
+    </button>
+</div>
   
 
   <div v-if="users" class="flex gap-12">
@@ -92,8 +96,14 @@
   import { ref } from 'vue';
 
   const { data: users, refresh } = await useAsyncData('users', () => 
-  useSanctumFetch<User[]>('/api/users')
-);
+    useSanctumFetch<User[]>('/api/users')
+  );
+
+  const { data: loggedInUser } = await useAsyncData('currentUser', () => 
+    useSanctumFetch<User>('/api/user')
+  );
+
+
   interface User{
     id: string
     name: string
