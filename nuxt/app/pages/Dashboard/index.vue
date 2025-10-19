@@ -58,6 +58,21 @@
           />
         </div>
 
+      
+        <div class="flex flex-col gap-1">
+          <label for="roles" class="font-semibold">Cargo</label>
+          <select
+            id = "roles"
+            v-model="newUser.roles"
+            class="p-2 border rounded-md focus:outline-blue-500"
+            default-value="Cargo"
+          >
+            <option value="admin">admin</option>
+            <option value="funcionario">funcionario</option>
+          </select>
+        </div>
+
+
         <div class="flex justify-end mt-4">
           <button 
             type="submit"
@@ -90,7 +105,8 @@
   const newUser = ref({
     name: '',
     email: '',
-    password: ''
+    password: '',
+    roles: 'funcionario'
   });
 
   async function createUser() {
@@ -111,7 +127,7 @@
     isModalVisible.value = false; // Fecha o modal
     
     // Limpa o formulário para a próxima vez
-    newUser.value = { name: '', email: '', password: '' }; 
+    newUser.value = { name: '', email: '', password: '', roles: '' }; 
     
     // 4. A MÁGICA: Atualiza a lista de usuários sem precisar recarregar a página!
     await refresh(); 
