@@ -178,6 +178,10 @@ async function deleteUser(userId: string){
     alert('Ocorreu um erro ao apagar o usuário. Verifique o console.');
   }
 }
+
+definePageMeta({
+    layout: 'admin', // Aqui você usa o nome do arquivo 'admin.vue'
+});
 </script>
 
 <style lang="scss" scoped>

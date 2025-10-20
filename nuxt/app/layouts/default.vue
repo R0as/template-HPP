@@ -30,12 +30,7 @@
         </div>
       </div>
     </nav>
-    <div class="flex flex-1 overflow-hidden">
-      <SideBar />
-      <div class="flex-1 overflow-y-auto bg-gray-100 p-6">
-        <slot/>
-      </div>
-    </div>
+      <slot/>
   </div>
 </template>
 
