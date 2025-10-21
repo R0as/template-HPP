@@ -35,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-  import SideBar from '~/components/SideBar.vue';
   interface User{
     name:string;
     email:string;

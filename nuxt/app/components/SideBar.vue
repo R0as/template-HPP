@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import adminLogo from '~/assets/images/Logo.png';
+
 
 interface MenuItem {
     title: string;
@@ -43,14 +45,26 @@ const menuItems = ref<MenuItem[]>([
   function logoutUser(){
     logout()
   }
+
 </script>
 
 <template>
-  <aside class="w-64 h-screen bg-gray-800 text-white p-10 flex flex-col">
-    <NuxtLink  to="/" class="text-2xl font-bold mb-6 border-b border-gray-700 pb-4  hover:text-gray-300">
+  <aside class="w-64 bg-gray-800 text-white p-4 flex flex-col h-full">
+    <div class="w-auto">
+      <img :src="adminLogo" alt="Logo da Dashboard"/>
+    </div>
+ 
+    <NuxtLink  to="/dashboard" class="text-2xl font-bold  border-b border-gray-700 pb-2 hover:text-gray-300">
         Template HPP
   </NuxtLink>
- 
+  <div class=" mb-6 border-b border-gray-700  flex items-center mx-2">
+    <div class="pi pi-user  rounded-4xl p-3">
+    </div>
+    <div class="flex flex-col">
+      <span class=" font-light text-base">Welcome</span>
+      <span v-if="user" class="font-bold">{{user.name}}</span>
+    </div>
+  </div>
     <ul class="space-y-2 overflow-y-auto">
       <li 
         v-for="item in menuItems" 
@@ -69,7 +83,7 @@ const menuItems = ref<MenuItem[]>([
 
       </li>
     </ul>
-    <NuxtLink @click.prevent="logoutUser" to="/" class="bg-red-600 p-2 items-center rounded-md mt-3 overflow-y-auto  hover:bg-red-700">
+    <NuxtLink @click.prevent="logoutUser" to="/" class="bg-red-600 p-2 items-center rounded-md mt-auto overflow-y-auto  hover:bg-red-700">
             Logout
     </NuxtLink>
   </aside>
