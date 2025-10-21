@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import adminLogo from '~/assets/images/Logo.png';
-
+import 'primeicons/primeicons.css'
 
 interface MenuItem {
     title: string;
@@ -58,7 +58,8 @@ const menuItems = ref<MenuItem[]>([
         Template HPP
   </NuxtLink>
   <div class=" mb-6 border-b border-gray-700  flex items-center mx-2">
-
+    <div class="pi pi-user  rounded-4xl p-3">
+    </div>
     <div class="flex flex-col">
       <span class=" font-light text-base">Welcome</span>
       <span v-if="user" class="font-bold">{{user.name}}</span>
