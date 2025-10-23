@@ -54,18 +54,10 @@ const menuItems = ref<MenuItem[]>([
       <img :src="adminLogo" alt="Logo da Dashboard"/>
     </div>
  
-    <NuxtLink  to="/dashboard" class="text-2xl font-bold  border-b border-gray-700 pb-2 hover:text-gray-300">
+    <NuxtLink  to="/dashboard" class="text-2xl font-bold  border-b border-gray-700 pb-3 hover:text-gray-300">
         Template HPP
   </NuxtLink>
-  <div class=" mb-6 border-b border-gray-700  flex items-center mx-2">
-    <div class="pi pi-user  rounded-4xl p-3">
-    </div>
-    <div class="flex flex-col">
-      <span class=" font-light text-base">Welcome</span>
-      <span v-if="user" class="font-bold">{{user.name}}</span>
-    </div>
-  </div>
-    <ul class="space-y-2 overflow-y-auto">
+    <ul class=" space-y-3 overflow-y-auto">
       <li 
         v-for="item in menuItems" 
         :key="item.title"
@@ -83,8 +75,15 @@ const menuItems = ref<MenuItem[]>([
 
       </li>
     </ul>
-    <NuxtLink @click.prevent="logoutUser" to="/" class="bg-red-600 p-2 items-center rounded-md mt-auto overflow-y-auto  hover:bg-red-700">
-            Logout
-    </NuxtLink>
+    <div class="flex flex-col mt-auto">
+      <div class=" mb-2 text-justify cursor-default tracking-tight ">
+        <span class=" font-light text-sm ">Welcome </span>
+        <span v-if="user" class=" font-medium"> {{user.name}} </span>
+      </div>
+        <NuxtLink @click.prevent="logoutUser" to="/" class="bg-red-600 p-2 items-center rounded-md mt-auto overflow-y-auto  hover:bg-red-700">
+        Logout 
+      </NuxtLink>
+    </div>
+   
   </aside>
 </template>
