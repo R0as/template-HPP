@@ -14,6 +14,7 @@
     "@qirolab/nuxt-sanctum-authentication": "^0.1.15",
     "@tailwindcss/vite": "^4.1.14",
     "nuxt": "^4.1.2",
+    "primeicons": "^7.0.0",
     "tailwindcss": "^4.1.14",
     "vue": "^3.5.22",
     "vue-router": "^4.5.1"

@@ -1,18 +1,19 @@
-<template>
+<template> 
+<div class="p-6 rounded-md shadow-2xl h-full">
   <div class="flex justify-between items-center mb-4">
-  <h1 class="text-xl font-bold">Painel de Usuários</h1>
-  
+    <h1 class="text-xl font-bold">Painel de Usuários</h1>
+    
     <button 
-      v-if="loggedInUser?.roles === 'admin'"
+    v-if="loggedInUser?.roles === 'admin'"
       @click="isModalVisible = true" 
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    >
+      >
       Novo Usuário
     </button>
 </div>
 
   <table v-if="users" class="w-full">
-  <thead>
+    <thead>
     <tr class="border-b">
       <th class="p-2 text-left font-bold">Nome</th>
       <th class="p-2 text-left font-bold">Email</th>
@@ -33,11 +34,12 @@
   </tbody>
 </table>
 
+</div>
 
   <AppModal 
     :visible="isModalVisible" 
     @close="isModalVisible = false"
-  >
+    >
     <h2 class="text-xl font-bold mb-4">Criar Novo Usuário</h2>
     
     <form @submit.prevent="createUser" class="mt-4">
@@ -178,6 +180,10 @@ async function deleteUser(userId: string){
     alert('Ocorreu um erro ao apagar o usuário. Verifique o console.');
   }
 }
+
+definePageMeta({
+    layout: 'admin', 
+});
 </script>
 
 <style lang="scss" scoped>
